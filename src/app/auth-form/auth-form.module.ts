@@ -8,6 +8,6 @@ import { AuthRememberComponent } from "./auth-remember/auth-remember.component";
 @NgModule({
   imports: [CommonModule, FormsModule],
   declarations: [AuthRememberComponent, AuthFormComponent],
-  exports: [AuthFormComponent]
+  exports: [AuthRememberComponent, AuthFormComponent]
 })
 export class AuthFormModule {}
