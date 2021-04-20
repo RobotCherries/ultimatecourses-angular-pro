@@ -4,16 +4,8 @@ import { User } from "./auth-form/auth-form.interface";
 
 @Component({
   selector: "my-app",
-  template: `
-    <div>
-      <auth-form (submitted)="createUser($event)">
-        <h3>Create account</h3>
-      </auth-form>
-      <auth-form (submitted)="loginUser($event)">
-        <h3>Login</h3>
-      </auth-form>
-    </div>
-  `
+  templateUrl: "app.component.html",
+  styleUrls: ["app.component.css"]
 })
 export class AppComponent {
   createUser(user: User) {

@@ -1,5 +1,17 @@
-<hello name="{{ name }}"></hello>
+<div>
+  <auth-form (submitted)="createUser($event)">
+    <h3>Create account</h3>
 
-<p>
-  Start editing to see some magic happen :)
-</p>
+    <button type="submit">
+      Join us
+    </button>
+  </auth-form>
+
+  <auth-form (submitted)="loginUser($event)">
+    <h3>Login</h3>
+
+    <button type="submit">
+      loginUser
+    </button>
+  </auth-form>
+</div>
