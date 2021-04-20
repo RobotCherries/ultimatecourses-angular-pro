@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 
-import { User } from "./auth-form/auth-form.interface";
+import { User } from "./auth-form/user.interface";
 
 @Component({
   selector: "app-root",
