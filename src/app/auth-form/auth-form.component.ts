@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter } from "@angular/core";
 
-import { User } from "./user.interface";
+import { User } from "./auth-form.interface";
 
 @Component({
   selector: "auth-form",
