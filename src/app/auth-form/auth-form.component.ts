@@ -19,7 +19,8 @@ import { AuthRememberComponent } from "./auth-remember/auth-remember.component";
 
 @Component({
   selector: "auth-form",
-  templateUrl: "auth-form.component.html"
+  templateUrl: "auth-form.component.html",
+  styleUrls: ["auth-form.component.scss"]
 })
 export class AuthFormComponent implements AfterViewInit, AfterContentInit {
   // Inputs & Outputs
@@ -44,8 +45,8 @@ export class AuthFormComponent implements AfterViewInit, AfterContentInit {
   constructor(private cdRef: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
+    this.initForm();
     this.initFormMessages();
-    console.log(this.emailFieldRef);
   }
 
   ngAfterContentInit(): void {
@@ -54,6 +55,15 @@ export class AuthFormComponent implements AfterViewInit, AfterContentInit {
 
   onSubmit(value: User) {
     this.submitted.emit(value);
+  }
+
+  initForm(): void {
+    this.emailFieldRef.nativeElement.setAttribute(
+      "placeholder",
+      "Enter your email address"
+    );
+    this.emailFieldRef.nativeElement.classList.add("email");
+    this.emailFieldRef.nativeElement.focus();
   }
 
   initFormMessages(): void {
