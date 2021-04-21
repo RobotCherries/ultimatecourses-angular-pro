@@ -2,12 +2,13 @@ import {
   Component,
   Output,
   EventEmitter,
-  ContentChild,
-  AfterContentInit,
-  ContentChildren,
   QueryList,
   ViewChild,
+  ViewChildren,
   AfterViewInit,
+  ContentChild,
+  ContentChildren,
+  AfterContentInit,
   ChangeDetectorRef
 } from "@angular/core";
 
@@ -24,11 +25,15 @@ export class AuthFormComponent implements AfterViewInit, AfterContentInit {
   @Output() submitted: EventEmitter<User> = new EventEmitter<User>();
 
   // View & Content Children
-  @ViewChild(AuthMessageComponent) authMessage: AuthMessageComponent;
-  // @ViewChildren(AuthMessageComponent) authMessages: QueryList<AuthMessageComponent>;
+  @ViewChild(AuthMessageComponent)
+  authMessage: AuthMessageComponent;
+  @ViewChildren(AuthMessageComponent)
+  authMessages: QueryList<AuthMessageComponent>;
 
-  @ContentChild(AuthRememberComponent) authRemember: AuthRememberComponent;
-  // @ContentChildren(AuthRememberComponent) authRemembers: QueryList<AuthRememberComponent>;
+  @ContentChild(AuthRememberComponent)
+  authRemember: AuthRememberComponent;
+  @ContentChildren(AuthRememberComponent)
+  authRemembers: QueryList<AuthRememberComponent>;
 
   // Booleans
   showAuthRememberMessage: boolean = false;
@@ -49,26 +54,38 @@ export class AuthFormComponent implements AfterViewInit, AfterContentInit {
 
   initFormMessages(): void {
     // View Children
+    // Change AuthMessage component properties
     if (this.authMessage) {
       this.authMessage.loggedInDays = 30;
+      this.cdRef.detectChanges();
+    }
+
+    // Subscribe to the AuthMessage QueryList of components
+    if (this.authMessages) {
+      this.authMessages.forEach((am: AuthMessageComponent) => {
+        am.loggedInDays = 30;
+      });
       this.cdRef.detectChanges();
     }
   }
 
   renderFormMessages(): void {
     // Content Children
+
+    // Subscribe to the AuthRemember component
     if (this.authRemember) {
-      // Subscribe to the RememberMe component
       this.authRemember.check.subscribe((isChecked: boolean) => {
         this.showAuthRememberMessage = isChecked;
       });
+    }
 
-      // Subscribe to the RememberMe QueryList of components
-      // this.remembers.forEach((r: AuthRememberComponent) => {
-      //   r.check.subscribe(
-      //     (isChecked: boolean) => (this.showAuthRememberMessage = isChecked)
-      //   );
-      // });
+    // Subscribe to the AuthRemember QueryList of components
+    if (this.authRemembers) {
+      this.authRemembers.forEach((r: AuthRememberComponent) => {
+        r.check.subscribe(
+          (isChecked: boolean) => (this.showAuthRememberMessage = isChecked)
+        );
+      });
     }
   }
 }
