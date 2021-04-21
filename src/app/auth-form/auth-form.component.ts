@@ -36,11 +36,11 @@ export class AuthFormComponent implements AfterViewInit, AfterContentInit {
   constructor(private cdRef: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
-    console.log(this.authMessage);
+    this.initFormMessages();
   }
 
   ngAfterContentInit(): void {
-    this.initFormMessages();
+    this.renderFormMessages();
   }
 
   onSubmit(value: User) {
@@ -50,17 +50,17 @@ export class AuthFormComponent implements AfterViewInit, AfterContentInit {
   initFormMessages(): void {
     // View Children
     if (this.authMessage) {
-      console.log(1);
       this.authMessage.loggedInDays = 30;
       this.cdRef.detectChanges();
     }
+  }
 
+  renderFormMessages(): void {
     // Content Children
     if (this.authRemember) {
       // Subscribe to the RememberMe component
       this.authRemember.check.subscribe((isChecked: boolean) => {
         this.showAuthRememberMessage = isChecked;
-        this.cdRef.detectChanges();
       });
 
       // Subscribe to the RememberMe QueryList of components
