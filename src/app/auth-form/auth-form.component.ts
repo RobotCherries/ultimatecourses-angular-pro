@@ -9,7 +9,8 @@ import {
   ContentChild,
   ContentChildren,
   AfterContentInit,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  ElementRef
 } from "@angular/core";
 
 import { User } from "./auth-form.interface";
@@ -25,6 +26,8 @@ export class AuthFormComponent implements AfterViewInit, AfterContentInit {
   @Output() submitted: EventEmitter<User> = new EventEmitter<User>();
 
   // View & Content Children
+  @ViewChild("email")
+  emailFieldRef: ElementRef;
   @ViewChild(AuthMessageComponent)
   authMessage: AuthMessageComponent;
   @ViewChildren(AuthMessageComponent)
@@ -42,6 +45,7 @@ export class AuthFormComponent implements AfterViewInit, AfterContentInit {
 
   ngAfterViewInit(): void {
     this.initFormMessages();
+    console.log(this.emailFieldRef);
   }
 
   ngAfterContentInit(): void {
