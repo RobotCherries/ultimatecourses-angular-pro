@@ -7,7 +7,8 @@ import {
   ContentChildren,
   QueryList,
   ViewChild,
-  AfterViewInit
+  AfterViewInit,
+  ChangeDetectorRef
 } from "@angular/core";
 
 import { User } from "./auth-form.interface";
@@ -32,7 +33,7 @@ export class AuthFormComponent implements AfterViewInit, AfterContentInit {
   // Booleans
   showAuthRememberMessage: boolean = false;
 
-  constructor() {}
+  constructor(private cdRef: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
     console.log(this.authMessage);
@@ -48,16 +49,19 @@ export class AuthFormComponent implements AfterViewInit, AfterContentInit {
 
   initFormMessages(): void {
     // View Children
-    if (this.authMessage?.loggedInDays) {
+    if (this.authMessage) {
+      console.log(1);
       this.authMessage.loggedInDays = 30;
+      this.cdRef.detectChanges();
     }
 
     // Content Children
     if (this.authRemember) {
       // Subscribe to the RememberMe component
-      this.authRemember.check.subscribe(
-        (isChecked: boolean) => (this.showAuthRememberMessage = isChecked)
-      );
+      this.authRemember.check.subscribe((isChecked: boolean) => {
+        this.showAuthRememberMessage = isChecked;
+        this.cdRef.detectChanges();
+      });
 
       // Subscribe to the RememberMe QueryList of components
       // this.remembers.forEach((r: AuthRememberComponent) => {
